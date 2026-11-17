@@ -1,0 +1,1 @@
+<section class="a">{{status}}{{if 	awaiting}}-p>{{amount}} {{fiat}}|/p>{{qr small}}-nasAs{{end}}lsstus{{if awaiting}}{{end}}</section>
