@@ -212,7 +212,9 @@ type Answerer = Arc<dyn Fn(&Message) -> Reply + Send + Sync>;
 async fn serve(tcp: bool, answer: Answerer) -> (SocketAddr, Arc<AtomicUsize>) {
     let asked = Arc::new(AtomicUsize::new(0));
     // The UDP port the system picks may be taken for TCP (by another test's
-    // connection, say): another port is picked until both are free.
+    // connection, say): another port is picked until both are free. Windows
+    // may refuse such a bind with PermissionDenied (WSAEACCES, 10013) rather
+    // than AddrInUse, when the port is in use or reserved.
     let (socket, listener) = loop {
         let socket = UdpSocket::bind((Ipv4Addr::LOCALHOST, 0)).await.unwrap();
         if !tcp {
@@ -220,7 +222,14 @@ async fn serve(tcp: bool, answer: Answerer) -> (SocketAddr, Arc<AtomicUsize>) {
         }
         match tokio::net::TcpListener::bind(socket.local_addr().unwrap()).await {
             Ok(listener) => break (socket, Some(listener)),
-            Err(e) if e.kind() == std::io::ErrorKind::AddrInUse => continue,
+            Err(e)
+                if matches!(
+                    e.kind(),
+                    std::io::ErrorKind::AddrInUse | std::io::ErrorKind::PermissionDenied
+                ) =>
+            {
+                continue
+            }
             Err(e) => panic!("{e}"),
         }
     };
