@@ -382,7 +382,8 @@ mod tests {
 
         assert!(attribute_names(&sources)
             .await
-            .contains(&"order.id".to_string()));
+            .iter()
+            .any(|i| i == "order.id"));
 
         let wrong = Sources {
             local: sources.local.clone(),

@@ -4245,7 +4245,7 @@ mod tests {
                 .collect();
             assert_eq!(amounts.len(), 5);
             assert!(
-                amounts.contains(&"999".to_string()) && !amounts.contains(&doomed.unit_amount),
+                amounts.iter().any(|i| i == "999") && !amounts.contains(&doomed.unit_amount),
                 "{amounts:?}"
             );
         }
