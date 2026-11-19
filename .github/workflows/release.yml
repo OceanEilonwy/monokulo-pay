@@ -440,6 +440,21 @@ jobs:
           body_path: notes.md
           generate_release_notes: true
 
+  nodo:
+    # A version tag's monokulo-nodo packages (mk-pay, mk-bell, mk-push-relay), built from the
+    # recipes in nodo/, attached to the release above and published in monokulo-nodo's feed
+    # (nodo/README.md). After github-release, so the release exists before they are attached.
+    name: nodo packages
+    needs: github-release
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    uses: OceanEilonwy/monokulo-nodo/.github/workflows/app-release.yml@main
+    with:
+      packages: mk-pay mk-bell mk-push-relay
+      tag: ${{ github.ref_name }}
+    secrets: inherit
+
   latest-main:
     # main's latest binaries as one prerelease, latest-main, brought up to
     # date on every push to main: the same file names every time, so its
