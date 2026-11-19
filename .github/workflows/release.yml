@@ -442,7 +442,7 @@ jobs:
 
   nodo:
     # A version tag's monokulo-nodo packages (mk-pay, mk-bell, mk-push-relay), built from the
-    # recipes in nodo/, attached to the release above and published in monokulo-nodo's feed
+    # recipes in nodo/, signed into this repository's own feed and attached to the release above
     # (nodo/README.md). After github-release, so the release exists before they are attached.
     name: nodo packages
     needs: github-release
