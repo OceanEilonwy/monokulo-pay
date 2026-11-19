@@ -1,6 +1,7 @@
 [package]
 name = "checkout-template"
 version.workspace = true
+license.workspace = true
 repository.workspace = true
 edition = "2021"
 description = "Checkout page templates and their CSS: parsed, checked for every order state, budgeted and rewritten so they can only do what a checkout may"
