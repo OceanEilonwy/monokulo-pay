@@ -60,6 +60,14 @@ jobs:
     name: build and deploy the site
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    env:
+      # liblzma-sys (arti's directory client uses it) links a system liblzma
+      # when pkg-config reports one of version 5.8 or later, and builds its
+      # own otherwise. Building the api_reference example failed on the
+      # 20261111 runner image with `unable to find library -llzma` for want
+      # of a library the linker could use. Build it from source, whatever the
+      # image has, as the Rust build job's runs do.
+      LZMA_API_STATIC: '1'
     permissions:
       contents: read
       actions: read
