@@ -801,7 +801,9 @@ mod tests {
     fn completions_follow_each_commands_grammar_and_the_wallets_data() {
         let specs = command_specs();
         let data = data();
-        assert!(names(candidates(&specs, &data, &[])).contains(&"transfer".to_string()));
+        assert!(names(candidates(&specs, &data, &[]))
+            .iter()
+            .any(|i| i == "transfer"));
         assert_eq!(
             names(candidates(&specs, &data, &["account"])),
             ["new", "switch", "label", "tag", "untag", "tag_description"]
@@ -829,16 +831,16 @@ mod tests {
         );
 
         let transfer = names(candidates(&specs, &data, &["transfer"]));
-        assert!(
-            transfer.contains(&"elevated".to_string()) && transfer.contains(&"5AAAA".to_string())
-        );
+        assert!(transfer.iter().any(|i| i == "elevated") && transfer.iter().any(|i| i == "5AAAA"));
         for previous in [
             ["transfer", "5AAAA", "1"],
             ["transfer", "A2ZqoS9ZE5", "1"],
             ["transfer", "elevated", "5AAAA"],
         ] {
             assert!(
-                !names(candidates(&specs, &data, &previous)).contains(&"elevated".to_string()),
+                !names(candidates(&specs, &data, &previous))
+                    .iter()
+                    .any(|i| i == "elevated"),
                 "priority only fits before the first address: {previous:?}"
             );
         }

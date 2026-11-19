@@ -2,6 +2,11 @@
 //! printed as the reference wallet does. See the crate README for the full
 //! table of what's supported and why the rest isn't.
 
+// Clap's derive for this many subcommands builds a large parser in one frame; it
+// runs once at startup, and only unoptimized builds trip the lint. The derive's
+// output is a sibling item, so the allow sits on the file, not on the enum.
+#![allow(clippy::large_unopt_stack_frames)]
+
 use std::collections::{BTreeMap, BTreeSet};
 use std::io::{BufRead, IsTerminal, Write};
 use std::sync::Arc;

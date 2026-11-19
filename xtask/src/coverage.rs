@@ -1221,8 +1221,8 @@ mod tests {
         ];
         render_index(out, &results).unwrap();
         let links = links_resolve(&out.join("index.html"));
-        assert!(links.contains(&"rust/index.html".to_string()), "{links:?}");
-        assert!(links.contains(&"screenshots/images/paid.png".to_string()));
+        assert!(links.iter().any(|i| i == "rust/index.html"), "{links:?}");
+        assert!(links.iter().any(|i| i == "screenshots/images/paid.png"));
         let page = fs::read_to_string(out.join("index.html")).unwrap();
         assert!(page.contains("<td>browser</td><td class=\"bad\">unavailable"));
         assert!(page.contains("<td>9 / 10</td>"));
