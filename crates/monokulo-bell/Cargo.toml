@@ -1,6 +1,7 @@
 [package]
 name = "monokulo-bell"
 version.workspace = true
+license.workspace = true
 repository.workspace = true
 # The edition it was written in, in the monokular repository; the other
 # crates here are on 2021, and nightly builds both.

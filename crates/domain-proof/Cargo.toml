@@ -1,6 +1,7 @@
 [package]
 name = "domain-proof"
 version.workspace = true
+license.workspace = true
 repository.workspace = true
 edition = "2021"
 description = "Proving a merchant controls a domain: a TXT record for a web domain, a file fetched only over Tor for an onion address"
