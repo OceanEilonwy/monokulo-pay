@@ -755,14 +755,14 @@ mod tests {
     #[test]
     fn a_custody_mutation_selects_the_extracted_package() {
         let command = test_command("router::properties::epoch", Build::Zmq);
-        assert!(command.contains(&"key-custody".to_string()));
-        assert!(!command.contains(&"--features".to_string()));
+        assert!(command.iter().any(|i| i == "key-custody"));
+        assert!(!command.iter().any(|i| i == "--features"));
     }
 
     #[test]
     fn engine_mutations_select_the_requested_features() {
         let command = test_command("work::test", Build::Zmq);
-        assert!(command.contains(&"engine".to_string()));
+        assert!(command.iter().any(|i| i == "engine"));
         let at = command.iter().position(|c| c == "--features").unwrap();
         assert_eq!(command[at + 1], "zmq");
     }
