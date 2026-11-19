@@ -1840,8 +1840,8 @@ mod tests {
             .into_iter()
             .map(|(id, _)| id)
             .collect();
-        assert!(ids.contains(&"live-payments".to_string()), "{ids:?}");
-        assert!(ids.contains(&"live-progress".to_string()), "{ids:?}");
+        assert!(ids.iter().any(|i| i == "live-payments"), "{ids:?}");
+        assert!(ids.iter().any(|i| i == "live-progress"), "{ids:?}");
     }
 
     /// A region is sent when its condition flips, never because something in

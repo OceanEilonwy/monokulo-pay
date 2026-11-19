@@ -1501,10 +1501,10 @@ mod tests {
                 "live coingecko smoke test: piconero_per_unit(\"USD\") = {usd}, {} supported currencies, \
                  includes USD: {}",
                 supported.len(),
-                supported.contains(&"USD".to_string())
+                supported.iter().any(|i| i == "USD")
             );
             assert!(usd > 0);
-            assert!(supported.contains(&"USD".to_string()));
+            assert!(supported.iter().any(|i| i == "USD"));
         }
     }
 }
