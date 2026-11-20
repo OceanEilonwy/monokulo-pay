@@ -1,0 +1,1 @@
+{"host":"locaos","port":1881,"fallbacks":[{"host":"","port":8162,"fallbacks":[{"host":"","port":1}]}]}
